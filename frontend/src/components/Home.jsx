@@ -9,7 +9,7 @@ export const Home = () => {
       <p>Get started by creating a new note and enjoy organizing your thoughts!</p>
       <div className="flex flex-col gap-4 justify-center items-center">
         <Link to="/newaccount" className='bg-blue-500 px-6 py-2 rounded-md text-white font-semibold hover:bg-blue-600 shadow-lg transition-all duration-200'>Create Account</Link>
-        <p className='text-sm'>already have an account? <a href="/login" className='text-blue-500 underline-effect'>login</a></p>
+        <p className='text-sm'>already have an account? <Link to="/login" className='text-blue-500 underline-effect'>login</Link></p>
       </div>
     </div>
 
