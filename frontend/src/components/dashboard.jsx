@@ -16,8 +16,6 @@ const dashboard = () => {
   const [id, setId] = useState("");
   const [editingId, setEditingId] = useState("");
 
-  const today = new Date();
-  const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
 
   //getting data from the db
@@ -94,7 +92,7 @@ const dashboard = () => {
                 <p>{n.content.length > 60
                   ? n.content.slice(0, 60) + "..."
                   : n.content}</p>
-                <div className="mt-1 text-gray-700">{date}</div>
+                
               </div>
               <div className="flex gap-4 items-center justify-center">
                 <button className='border bg-blue-500 px-3 py-1 rounded-xl cursor-pointer hover:bg-blue-800 text-white '
