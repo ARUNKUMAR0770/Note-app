@@ -1,3 +1,3 @@
-Link to Note-app web application
+Link to Note-app application
 
 https://note-app-frontend-smnd.onrender.com
