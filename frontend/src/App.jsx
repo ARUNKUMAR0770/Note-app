@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './pages/Navbar'
 import { Home } from './pages/Home'
 import { Login } from './pages/Login'
@@ -39,7 +39,7 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar name={AuthUser?.username} setAuthUser={setAuthUser} setIsLoading={setIsLoading} />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -48,7 +48,7 @@ const App = () => {
         <Route path="/dashboard" element={AuthUser ? <Dashboard setIsLoading={setIsLoading} /> : <Login setAuthUser={setAuthUser} />} />
       </Routes>
       <Toaster />
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
