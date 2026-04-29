@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 export const Login = ({setAuthUser,setIsLoading}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const Navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,7 +20,7 @@ export const Login = ({setAuthUser,setIsLoading}) => {
       const userRes = await API.get("/auth/check", { withCredentials: true });
       setAuthUser(userRes.data);
       toast.success("Logged in successfully!");
-      window.location.href = "/dashboard";
+      Navigate("/dashboard");
       
     } catch (error) {
       console.log(error);

@@ -2,13 +2,14 @@ import { User } from 'lucide-react';
 import { CheckCheck } from 'lucide-react';
 import { Link} from 'react-router-dom';
 import API from '../api/axios';
-import { useEffect, useState } from 'react';
 import { toast } from "react-hot-toast";
+import {useNavigate } from 'react-router-dom'
 
 
 
 
 const Navbar = ({ name, setAuthUser,setIsLoading}) => {
+    const Navigate = useNavigate();
     
    
     const handleLogout = async () => {
@@ -17,7 +18,7 @@ const Navbar = ({ name, setAuthUser,setIsLoading}) => {
             await API.post("/auth/logout", { withCredentials: true });
             setAuthUser(null);
             name = "";
-            window.location.href = "/";
+            Navigate("/login")
             toast.success("Logged out successfully!");
 
         } catch (error) {
