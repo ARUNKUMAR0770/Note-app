@@ -7,7 +7,7 @@ import Account from './pages/Account'
 import API from './api/axios'
 import PageLoader from './components/PageLoader'
 import { Toaster, toast } from 'react-hot-toast'
-import DashBoard from './pages/DashBoard'
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
 
@@ -43,9 +43,9 @@ const App = () => {
       <Navbar name={AuthUser?.username} setAuthUser={setAuthUser} setIsLoading={setIsLoading} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={AuthUser ? <DashBoard /> : <Login setAuthUser={setAuthUser} setIsLoading={setIsLoading} />} />
-        <Route path="/newaccount" element={AuthUser ? <DashBoard /> : <Account setIsLoading={setIsLoading} />} />
-        <Route path="/dashboard" element={AuthUser ? <DashBoard setIsLoading={setIsLoading} /> : <Login setAuthUser={setAuthUser} />} />
+        <Route path="/login" element={AuthUser ? <Dashboard /> : <Login setAuthUser={setAuthUser} setIsLoading={setIsLoading} />} />
+        <Route path="/newaccount" element={AuthUser ? <Dashboard /> : <Account setIsLoading={setIsLoading} />} />
+        <Route path="/dashboard" element={AuthUser ? <Dashboard setIsLoading={setIsLoading} /> : <Login setAuthUser={setAuthUser} />} />
       </Routes>
       <Toaster />
     </BrowserRouter>
