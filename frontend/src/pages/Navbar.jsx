@@ -1,50 +1,43 @@
-import React, { useEffect, useState } from 'react'
 import { User } from 'lucide-react';
 import { CheckCheck } from 'lucide-react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { jwtDecode } from "jwt-decode";
+import { Link} from 'react-router-dom';
+import API from '../api/axios';
+import { useEffect, useState } from 'react';
+import { toast } from "react-hot-toast";
 
 
 
-const Navbar = () => {
-    const [username, setUsername] = useState("");
-    const location = useLocation();
-    const navigate = useNavigate();
 
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token) return;
-
+const Navbar = ({ name, setAuthUser,setIsLoading}) => {
+    
+   
+    const handleLogout = async () => {
+        setIsLoading(true)
         try {
-            const decoded = jwtDecode(token);
-            setUsername(decoded.username || "");
-        } catch {
-            localStorage.removeItem("token");
+            await API.post("/auth/logout");
+            setAuthUser(null);
+            window.location.href = "/login";
+            toast.success("Logged out successfully!");
+
+        } catch (error) {
+            console.error(error);
+            setIsLoading(false);
         }
-    }, []);
-
-    const isDashboard = location.pathname === "/dashboard";
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        navigate("/login");
-    }
-
-
+        setIsLoading(false)
+    };
 
     return (
         <div className='w-full px-5 py-4 shadow-xl flex justify-between items-center font-semibold'>
             <div className="flex items-center justify-center cursor-pointer gap-1 underline-effect">
             <Link to="/">
-            <h1 className='bg-none text-2xl  cursor-pointer '>Note</h1></Link>
+            <h1 className='bg-none text-2xl  cursor-pointer ' onClick={handleLogout} >Note</h1></Link>
             <CheckCheck />
             </div>
             <div className="flex gap-2 justify-center items-center">
             </div>
-            {isDashboard ? (
+            {name ? (
                 <div className="flex items-center gap-3">
-                    <p>{username}</p>
+                    <p>{name}</p>
                     <button onClick={handleLogout} className="bg-blue-600 text-white px-3 py-1 rounded-xl hover:bg-blue-800 cursor-pointer">
                         Logout
                     </button>

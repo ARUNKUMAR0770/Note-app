@@ -5,8 +5,7 @@ import API from "../api/axios.js";
 import { Trash2 } from 'lucide-react';
 
 
-
-const dashboard = () => {
+const Dashboard = ({setIsLoading}) => {
   const [notes, setNotes] = useState([]);
   const [index, setIndex] = useState(0);
   const [title, setTitle] = useState("");
@@ -24,26 +23,31 @@ const dashboard = () => {
       try {
         const res = await API.get("/notes");
         setNotes(res.data);
+        console.log(res.data)
         setIndex(0);
       } catch (err) {
         console.log(err)
       }
+      
     }
     fetchNotes();
   }, []);
   //deleting notes
   const handleDelete = async (id) => {
+    setIsLoading(true)
     try {
       await API.delete(`/notes/${id}`);
-      setNotes((prev) => prev.filter((note) => note._id !== id));// filtering only not equal to id
+      setNotes((prev) => prev.filter((note) => note._id !== id));// filtering the note which are not equal to id
       setShowAlert(false)
     } catch (err) {
       console.log(err);
+      setIsLoading(false)
     }
+    setIsLoading(false)
   }
   const handleSumbit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true)
     try {
       if (editingId) {
         const res = await API.put(`/notes/${editingId}`, {
@@ -55,6 +59,7 @@ const dashboard = () => {
         setEditingId("");
         setTitle("");
         setNote("");
+        setIsLoading(false)
         return;
       } else {
         const res = await API.post("/notes", {
@@ -65,12 +70,15 @@ const dashboard = () => {
         setTitle("Title");
         setNote("");
         setOpen(false);
+        setIsLoading(false)
       }
 
 
     } catch (err) {
       console.log(err);
+      setIsLoading(false)
     }
+    setIsLoading(false)
 
   };
   //handleDelete button
@@ -92,7 +100,7 @@ const dashboard = () => {
                 <p>{n.content.length > 60
                   ? n.content.slice(0, 60) + "..."
                   : n.content}</p>
-                
+
               </div>
               <div className="flex gap-4 items-center justify-center">
                 <button className='border bg-blue-500 px-3 py-1 rounded-xl cursor-pointer hover:bg-blue-800 text-white '
@@ -106,7 +114,7 @@ const dashboard = () => {
                 >edit</button>
                 <Trash2 className='cursor-pointer hover:text-red-500' onClick={() => handleDeleteButton(n._id)} />
               </div>
-              
+
             </div>
 
           ))
@@ -138,7 +146,6 @@ const dashboard = () => {
           </div>
 
         </div>
-
       )}
       {showAlert && (
         <div className="fixed top-0 right-0 w-full h-screen bg-black/40 flex items-center justify-center">
@@ -155,4 +162,4 @@ const dashboard = () => {
   )
 }
 
-export default dashboard
+export default Dashboard

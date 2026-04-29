@@ -2,8 +2,9 @@ import React from 'react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../api/axios.js';
+import { toast } from "react-hot-toast";
 
-const Account = () => {
+const Account = ({setAuthUser,setIsLoading}) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,7 +12,11 @@ const Account = () => {
 
   const handleRegister = async(e) =>{
     e.preventDefault();
-
+    if (!username || !email || !password) {
+      alert("All fields are required");
+      return;
+    }
+    setIsLoading(true)
     try{
       await API.post("/auth/newaccount", {
         username,
@@ -19,9 +24,13 @@ const Account = () => {
         password,
       });
       navigate("/login");
+      toast.success("Account created successfully!");
     }catch(err){
-      console.log(err);
+      console.log(err.response?.data || err.message);
+      setIsLoading(false)
+      toast.error(err.response?.data?.message || "Failed to create account");
     }
+    setIsLoading(false);
   }
   return (
     <div className='text-white w-full h-[calc(100vh-70px)] flex items-center justify-center'>

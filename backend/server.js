@@ -5,6 +5,7 @@ import User from './models/user.js';
 import authRoutes from './routes/authRoutes.js';
 import noteRoutes from './routes/noteRoutes.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -12,16 +13,19 @@ const app = express();
 
 //middleware
 app.use(express.json());
+app.use(cookieParser());
+
 app.use(cors({
     origin:["http://localhost:5173","https://note-app-frontend-smnd.onrender.com"],
     credentials: true,
 }))
 
+
 //Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/notes', noteRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 connectDB().then(() => {
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
