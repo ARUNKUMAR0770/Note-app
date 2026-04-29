@@ -14,9 +14,10 @@ const Navbar = ({ name, setAuthUser,setIsLoading}) => {
     const handleLogout = async () => {
         setIsLoading(true)
         try {
-            await API.post("/auth/logout");
+            await API.post("/auth/logout", { withCredentials: true });
             setAuthUser(null);
-            window.location.href = "/login";
+            name = "";
+            window.location.href = "/";
             toast.success("Logged out successfully!");
 
         } catch (error) {

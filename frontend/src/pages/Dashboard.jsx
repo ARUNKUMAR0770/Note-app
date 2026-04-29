@@ -5,7 +5,7 @@ import API from "../api/axios.js";
 import { Trash2 } from 'lucide-react';
 
 
-const Dashboard = ({setIsLoading}) => {
+const DashBoard = ({setIsLoading}) => {
   const [notes, setNotes] = useState([]);
   const [index, setIndex] = useState(0);
   const [title, setTitle] = useState("");
@@ -162,4 +162,4 @@ const Dashboard = ({setIsLoading}) => {
   )
 }
 
-export default Dashboard
+export default DashBoard;
