@@ -28,7 +28,6 @@ const Navbar = ({ name, setAuthUser,setIsLoading}) => {
         setIsLoading(false)
     };
     const handleClick = async() => {
-        await API.post("/auth/logout", { withCredentials: true });
         setAuthUser(null);
         Navigate("/");   
     }

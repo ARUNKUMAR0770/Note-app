@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Navbar from './pages/Navbar';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
@@ -20,13 +20,15 @@ const App = () => {
 const AppContent = () => {
   const [AuthUser, setAuthUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const res = await API.get("/auth/check", { withCredentials: true });
+        console.log("Auth check initiated")
         setAuthUser(res.data);
-        Navigate("/dashboard")
+        navigate("/dashboard")
       } catch (error) {
         setAuthUser(null);
       } finally {
@@ -46,7 +48,7 @@ const AppContent = () => {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Route path="/login" element={AuthUser ?<Navigate to="/dashboard" /> : <Login setAuthUser={setAuthUser} setIsLoading={setIsLoading} />} />
+        <Route path="/login" element={AuthUser ? <Navigate to="/dashboard" /> : <Login setAuthUser={setAuthUser} setIsLoading={setIsLoading} />} />
 
         <Route path="/newaccount" element={AuthUser ? <Navigate to="/dashboard" /> : <Account setIsLoading={setIsLoading} />} />
 
