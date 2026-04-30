@@ -27,12 +27,17 @@ const Navbar = ({ name, setAuthUser,setIsLoading}) => {
         }
         setIsLoading(false)
     };
+    const handleClick = async() => {
+        await API.post("/auth/logout", { withCredentials: true });
+        setAuthUser(null);
+        Navigate("/");   
+    }
 
     return (
         <div className='w-full px-5 py-4 shadow-xl flex justify-between items-center font-semibold'>
             <div className="flex items-center justify-center cursor-pointer gap-1 underline-effect">
             <Link to="/">
-            <h1 className='bg-none text-2xl  cursor-pointer ' onClick={()=>Navigate("/")} >Note</h1></Link>
+            <h1 className='bg-none text-2xl  cursor-pointer ' onClick={handleClick} >Note</h1></Link>
             <CheckCheck />
             </div>
             <div className="flex gap-2 justify-center items-center">
